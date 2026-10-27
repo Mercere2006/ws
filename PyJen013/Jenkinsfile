@@ -2,19 +2,14 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/Mercere2006/PyJen013.git'
-            }
-        }
-
         stage('Install Dependencies') {
             steps {
+                echo 'Installing requirements...'
                 sh 'python3 -m pip install --upgrade pip'
                 sh 'pip install -r requirements.txt'
             }
         }
-
+        
         stage('Lint') {
             steps {
                 echo 'Checking code style with flake8...'
@@ -31,7 +26,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Deploying application...'
+                echo 'Executing application...'
                 sh 'python3 main.py'
             }
         }
